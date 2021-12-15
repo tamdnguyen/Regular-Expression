@@ -58,16 +58,28 @@ def extract_names(filename):
         sys.exit(1)
     year = year_match.group(1)
     info.append(year)
-    print("year found", year)
 
     # find the names info
-    tuples = re.findall(r'(<td>)(.+?)(</td>)', text, re.IGNORECASE)
-    # print("Tuple:", tuples)
+    tuples = re.findall(r'<td>(\d+?)</td><td>(\w+?)</td><td>(\w+?)</td>', text, re.IGNORECASE)
+    # create a dictionary for names and their rank
+    # first, create separate dictionary
+    names_rank = {}
     for tuple in tuples:
-        info.append(tuple[1])
+        try:
+            names_rank[tuple[1]] = tuple[0]
+            names_rank[tuple[2]] = tuple[0]
+        except IndexError:
+            print("Line error:", tuple)
+    # sort the dictionary by name alphabetically
+    name_items = names_rank.items()
+    sorted_name = sorted(name_items)
 
-    print("final list", info)
-    return 0
+    # add the names into the final list
+    for name in sorted_name:
+        text = "{:s} {:d}".format(name[0], int(name[1]))
+        info.append(text)
+
+    return info
 
 
 def main():
@@ -90,8 +102,9 @@ def main():
     # For each filename, get the names, then either print the text output
     # or write it to a summary file
     for arg in args:
-        text = extract_names(arg)
-
+        sorted_names = extract_names(arg)
+        text = '\n'.join(sorted_names) + '\n'
+        print(text)
 
 
 
