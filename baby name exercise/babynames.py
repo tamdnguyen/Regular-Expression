@@ -47,37 +47,40 @@ def extract_names(filename):
     info = []
 
     # open and read the file
-    file = open(filename, "r")
-    text = file.read()
-    file.close()
+    try:
+        file = open(filename, "r")
+        text = file.read()
+        file.close()
 
-    # find the year
-    year_match = re.search(r'input type="text" name="year" id="yob" size="4" value="(\d*?)"', text)
-    if not year_match:
-        print("Cannot find the year!")
-        sys.exit(1)
-    year = year_match.group(1)
-    info.append(year)
+        # find the year
+        year_match = re.search(r'input type="text" name="year" id="yob" size="4" value="(\d*?)"', text)
+        if not year_match:
+            print("Cannot find the year!")
+            sys.exit(1)
+        year = year_match.group(1)
+        info.append(year)
 
-    # find the names info
-    tuples = re.findall(r'<td>(\d+?)</td><td>(\w+?)</td><td>(\w+?)</td>', text, re.IGNORECASE)
-    # create a dictionary for names and their rank
-    # first, create separate dictionary
-    names_rank = {}
-    for tuple in tuples:
-        try:
-            names_rank[tuple[1]] = tuple[0]
-            names_rank[tuple[2]] = tuple[0]
-        except IndexError:
-            print("Line error:", tuple)
-    # sort the dictionary by name alphabetically
-    name_items = names_rank.items()
-    sorted_name = sorted(name_items)
+        # find the names info
+        tuples = re.findall(r'<td>(\d+?)</td><td>(\w+?)</td><td>(\w+?)</td>', text, re.IGNORECASE)
+        # create a dictionary for names and their rank
+        # first, create separate dictionary
+        names_rank = {}
+        for tuple in tuples:
+            try:
+                names_rank[tuple[1]] = tuple[0]
+                names_rank[tuple[2]] = tuple[0]
+            except IndexError:
+                print("Line error:", tuple)
+        # sort the dictionary by name alphabetically
+        name_items = names_rank.items()
+        sorted_name = sorted(name_items)
 
-    # add the names into the final list
-    for name in sorted_name:
-        text = "{:s} {:d}".format(name[0], int(name[1]))
-        info.append(text)
+        # add the names into the final list
+        for name in sorted_name:
+            text = "{:s} {:d}".format(name[0], int(name[1]))
+            info.append(text)
+    except OSError:
+        print("Cannot open {:s}.".format(filename))
 
     return info
 
@@ -104,7 +107,10 @@ def main():
     for arg in args:
         sorted_names = extract_names(arg)
         text = '\n'.join(sorted_names) + '\n'
-        print(text)
+        filename = str(arg) + ".summary"
+        file = open(filename, "w")
+        file.write(text + "\n")
+        file.close()
 
 
 
