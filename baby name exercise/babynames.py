@@ -43,15 +43,30 @@ def extract_names(filename):
     followed by the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
+    # create list named "info", which will be our final list ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
+    info = []
 
-    # create a list to store the text from html file
-    text = []
+    # open and read the file
     file = open(filename, "r")
-    tuples = re.findall(r'(<td>)(.+?)(</td>)', file.read(), re.IGNORECASE)
-    for tuple in tuples:
-        text.append(tuple[1])
+    text = file.read()
+    file.close()
 
-    print(text)
+    # find the year
+    year_match = re.search(r'input type="text" name="year" id="yob" size="4" value="(\d*?)"', text)
+    if not year_match:
+        print("Cannot find the year!")
+        sys.exit(1)
+    year = year_match.group(1)
+    info.append(year)
+    print("year found", year)
+
+    # find the names info
+    tuples = re.findall(r'(<td>)(.+?)(</td>)', text, re.IGNORECASE)
+    # print("Tuple:", tuples)
+    for tuple in tuples:
+        info.append(tuple[1])
+
+    print("final list", info)
     return 0
 
 
