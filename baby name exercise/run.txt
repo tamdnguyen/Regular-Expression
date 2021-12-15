@@ -1,0 +1,11 @@
+After running the program, the program will read the html files, extract the year and the names
+in alphabetical order with its ranking, then it will create text summary and write it into
+new file with the name "baby*.html.summary" for each html file
+
+For e.g., file baby1990.html will be read and after the program executes, it will create new
+file with the information summary name baby1990.html.summary
+
+CODE FOR RUNNING THE PROGRAM IN COMMAND PROMPT WINDOWS
+- Run program for a single file: python babynames.py baby*.html (replace * with the year of the
+file you want to read
+- Run program for all html files: for %f in (baby*.html) do python babynames.py %f
