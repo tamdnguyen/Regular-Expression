@@ -13,8 +13,8 @@ import re
 
 
 def split(line):
-    delimiter = r"[,;\"\'{}\|\/]"
-    return re.split(r"[,;\"\'{}\|\/\n*]", line)
+    delimiter = r"[,;\"\'{}\|\/\n*]"
+    return re.split(delimiter, line)
 
 
 def main():
