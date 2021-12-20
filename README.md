@@ -11,7 +11,8 @@ is written on the top of the program, and you can get sample
 text from the program below in the file.
 
 Start date: Dec. 15, 2021
+End date: Dec. 20, 2021
 
 Baby name exercise: Dec. 15-16, 2021
 
-56 Regex exercise: Dec. 17- , 2021
+56 Regex exercise: Dec. 17-20 , 2021
