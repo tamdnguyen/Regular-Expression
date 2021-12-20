@@ -10,4 +10,15 @@ Length of the expression will not exceed 100.
 -1 ? 10 9 = intermediate results of computation = 10 9
 
 """
+import re
 
+
+def main():
+    cases = int(input("Input number of data sets:\n"))
+    for i in range(cases):
+        line = input("Input an expression:\n")
+        expression = re.search(r"[0-9+\*\/\(\)-]+=", line)
+        print(eval(expression.group()[:-1]))
+
+
+main()

@@ -21,9 +21,10 @@ import re
 
 
 def snake_case(line):
-    replace_space = re.sub(r"(_|-)+", " ", line)
-    words = re.findall(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+", replace_space)
-    return words
+    words = re.sub(r"[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+",
+                   lambda mo: ' ' + mo.group(0).lower(), line)
+    replace_space = re.sub(r"(_|-)+", " ", words)
+    return "-".join(replace_space.split())
 
 
 def main():
