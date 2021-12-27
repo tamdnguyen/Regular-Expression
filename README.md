@@ -16,3 +16,5 @@ End date: Dec. 20, 2021
 Baby name exercise: Dec. 15-16, 2021
 
 56 Regex exercise: Dec. 17-20 , 2021
+
+Happy Learning. Cheers!
